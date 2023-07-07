@@ -50,6 +50,10 @@ export const EntryPage:React.FC<Props> = ({entry}) => {
 
   }
 
+  const onDelete = () => {
+    //TODO: Eliminar Por ID
+  }
+
 
   return (
     <Layouts title={inputValue.substring(1,20) + '...'}>
@@ -104,7 +108,7 @@ export const EntryPage:React.FC<Props> = ({entry}) => {
             </Grid>
         </Grid>
 
-        <IconButton sx={{ position: 'fixed', bottom: 30, right: 30, backgroundColor: 'error.dark'}}>
+        <IconButton sx={{ position: 'fixed', bottom: 30, right: 30, backgroundColor: 'error.dark'}} onClick={onDelete}>
           <DeleteOutlinedIcon />
         </IconButton>
     </Layouts>
