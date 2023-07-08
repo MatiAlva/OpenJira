@@ -31,7 +31,27 @@ export const  EntriesProvider: React.FC<Props> = ({children}) => {
             const {data} = await entriesApi.put<Entry>(`/entries/${_id}`, {description, status})
             dispatch({ type: 'Entry - Entry-Updated', payload: data })
 
-            enqueueSnackbar('Entrada actualizada',{
+            enqueueSnackbar('Entrada Actualizada',{
+                variant: 'success',
+                autoHideDuration: 1500,
+                anchorOrigin: {
+                    vertical: 'top',
+                    horizontal: 'right'
+                }
+            })
+
+        } catch (error) {
+            console.log({error})
+        }
+    }
+
+
+    const deleteEntry = async(entry: Entry) => {
+        try {
+            const {data} = await entriesApi.delete<Entry>(`/entries/${entry._id}`)
+            dispatch({ type: 'Entry - Delete-Entry', payload: data })
+
+            enqueueSnackbar('Entrada Eliminada',{
                 variant: 'success',
                 autoHideDuration: 1500,
                 anchorOrigin: {
@@ -52,7 +72,7 @@ export const  EntriesProvider: React.FC<Props> = ({children}) => {
 
     useEffect(() => {
         refreshEntries()
-    }, [])
+    }, [state])
 
 
     
@@ -64,7 +84,8 @@ export const  EntriesProvider: React.FC<Props> = ({children}) => {
 
              //Methods
              addNewEntry,
-             updateEntry
+             updateEntry,
+             deleteEntry
         }}>
        {children}
        </EntriesContext.Provider>

@@ -2,6 +2,7 @@ import { db } from '@/database'
 import { Entry, IEntry } from '@/models'
 import mongoose from 'mongoose'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { NextRequest, NextResponse } from 'next/server'
 
 type Data = 
     |{message: string}
@@ -22,6 +23,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 
         case 'GET':
             return getEntry(req, res)
+
+        
+        case 'DELETE':
+            return deleteEntry(req, res)
 
         default:
             return res.status(400).json({message: 'Metodo inexistente'})
@@ -67,4 +72,18 @@ const getEntry = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
     }
 
     return res.status(200).json(entryInDB)
+}
+
+const deleteEntry = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
+    const {id} = req.query
+    await db.connect()
+
+    const deleteEntry = await Entry.findByIdAndDelete(id)
+    await db.disconnected()
+
+    if(!deleteEntry){
+        return res.status(400).json({message: 'No se puede eliminar la informacion con el id: ' +id})
+    }
+
+    return res.status(200).json({message: 'Eliminado con Exit'})
 }

@@ -20,7 +20,7 @@ interface Props{
 
 export const EntryPage:React.FC<Props> = ({entry}) => {
 
-  const { updateEntry } = useContext(EntriesContext)
+  const { updateEntry, deleteEntry } = useContext(EntriesContext)
   const [inputValue, setInputValue] = useState(entry.description)
   const [status, setStatus] = useState<EntryStatus>(entry.status)
   const [touched, setTouched] = useState(false)
@@ -51,7 +51,8 @@ export const EntryPage:React.FC<Props> = ({entry}) => {
   }
 
   const onDelete = () => {
-    //TODO: Eliminar Por ID
+    deleteEntry(entry)
+    router.replace('/')
   }
 
 
