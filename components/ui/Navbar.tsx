@@ -21,7 +21,7 @@ export const Navbar = () => {
                 <MenuOutlinedIcon />
             </IconButton>
 
-            <NextLink href='/' passHref>
+            <NextLink href='/' passHref  legacyBehavior>
               <Link underline="none" color='white'>
                 <Typography variant="h6">OpenJira</Typography>
               </Link>
